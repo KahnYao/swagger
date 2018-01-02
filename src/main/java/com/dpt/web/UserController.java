@@ -1,5 +1,7 @@
 package com.dpt.web;
 
+import com.alibaba.fastjson.JSON;
+import com.dpt.mapper.UserMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -11,13 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import com.dpt.pojo.User;
+import com.dpt.entity.User;
 
 @Api("UserController 接口")
 @RestController
@@ -25,6 +24,19 @@ import com.dpt.pojo.User;
 public class UserController {
 
     static Map<Long, User> users = Collections.synchronizedMap(new HashMap<Long, User>());
+
+    @Autowired
+    UserMapper userMapper;
+
+    @ApiOperation(value = "获取用户详细信息", notes = "根据url的username来获取用户详细信息")
+//    @ApiImplicitParam(name = "userName", value = "用户姓名", required = true, dataType = "String")
+    @RequestMapping(value = "/user/{userName}", method = RequestMethod.GET)
+    @ResponseBody
+    public String user(@PathVariable("userName") String userName) {
+        User user = userMapper.findUserByName(userName);
+        if (user == null) return userName + "不存在";
+        else return JSON.toJSONString(user);
+    }
 
     @ApiOperation(value = "获取用户列表", notes = "")
     @RequestMapping(value = {""}, method = RequestMethod.GET)

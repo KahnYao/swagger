@@ -26,11 +26,11 @@ public class Swagger2 {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("Kahn", "http://localhost:8088", "admin@mail.com");
+        Contact contact = new Contact("", "", "");
         return new ApiInfoBuilder()
-                .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                .description("更多Spring Boot相关文章请关注：http://localhost:8088/")
-                .termsOfServiceUrl("http://localhost:8088")
+                .title("")
+                .description("")
+                .termsOfServiceUrl("")
                 .contact(contact)
                 .version("1.0.0")
                 .build();

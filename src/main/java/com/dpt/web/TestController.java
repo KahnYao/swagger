@@ -1,26 +1,37 @@
 package com.dpt.web;
 
+import com.alibaba.fastjson.JSON;
 import com.dpt.mapper.UserMapper;
-import com.dpt.pojo.User;
+import com.dpt.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/")
 public class TestController {
 
     @Autowired
     UserMapper userMapper;
 
-    @RequestMapping(value = "/user/{userName}")
+    @RequestMapping(value = "/getUserByName/{name}", method = RequestMethod.GET)
     @ResponseBody
-    public String user(@PathVariable("userName") String userName) {
-        User user = userMapper.findUserByName(userName);
-        if (user == null) return userName + "不存在";
-        else return user.getName() + "年龄：" + user.getAge();
+    public String getUserByName(@PathVariable("name") String name) {
+        User user = userMapper.getUserByName(name);
+        if (user == null) {
+            return name + "不存在";
+        } else {
+            return JSON.toJSONString(user);
+        }
     }
 
+    @RequestMapping(value = "/getUserById/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserById(@PathVariable("id") Integer id) {
+        User user = userMapper.getUserById(id);
+        if (user == null) {
+            return id + "不存在";
+        } else {
+            return JSON.toJSONString(user);
+        }
+    }
 }

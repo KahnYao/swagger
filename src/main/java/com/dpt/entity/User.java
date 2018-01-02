@@ -1,4 +1,4 @@
-package com.dpt.pojo;
+package com.dpt.entity;
 
 public class User {
     private Long id;
