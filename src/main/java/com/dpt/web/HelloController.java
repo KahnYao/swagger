@@ -14,9 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @ApiOperation(value = "更新用户详细信息", notes = "根据url的id来指定更新对象，并根据传过来的user信息来更新用户详细信息")
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index() {
         return JSON.toJSONString(new ApiResult(ResultConstant.FILE_TYPE_ERROR, new Object()));
+    }
+
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String hello() {
+        return JSON.toJSONString(new ApiResult(1,"hello world.", new Object()));
+    }
+
+    @RequestMapping(value = "/hi", method = RequestMethod.GET)
+    public String hi() {
+        return JSON.toJSONString(new ApiResult(1,"hi~."));
     }
 
 }
